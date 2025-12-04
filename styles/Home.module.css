@@ -1,11 +1,10 @@
 .page {
   --background: #0f0f0f;
   --foreground: #1a1a1a;
-
   --text-primary: #e0e0e0;
   --text-secondary: #888888;
-
-  --button-primary-hover: #3a0ca3;   /* Deep purple hover */
+  --accent: #7f39fb; /* Primary accent color */
+  --button-primary-hover: #3a0ca3;
   --button-secondary-hover: #2a2a2a;
   --button-secondary-border: #333333;
 
@@ -19,18 +18,18 @@
 
 .main {
   display: flex;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 800px;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 900px;
+  padding: 80px 60px;
   background-color: var(--foreground);
-  padding: 120px 60px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
+/* Hero Section */
 .intro {
   display: flex;
   flex-direction: column;
@@ -40,103 +39,121 @@
 }
 
 .intro h1 {
-  max-width: 320px;
   font-size: 40px;
   font-weight: 600;
   line-height: 48px;
-  letter-spacing: -2.4px;
   color: var(--text-primary);
 }
 
 .intro p {
-  max-width: 440px;
   font-size: 18px;
   line-height: 32px;
   color: var(--text-secondary);
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--accent);
-}
-
-.ctas {
+.ctaButtons {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
   gap: 16px;
-  font-size: 14px;
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
+.ctaButtons button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
   cursor: pointer;
-  width: fit-content;
   font-weight: 500;
+  transition: 0.2s;
 }
 
-a.primary {
-  background: var(--accent);
+.primaryButton {
+  background-color: var(--accent);
   color: var(--background);
-  gap: 8px;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.primaryButton:hover {
+  background-color: var(--button-primary-hover);
+}
+
+.secondaryButton {
+  background-color: transparent;
+  border: 1px solid var(--button-secondary-border);
   color: var(--text-primary);
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.secondaryButton:hover {
+  background-color: var(--button-secondary-hover);
 }
 
+/* Features Section */
+.features {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.features h3 {
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.featureCard {
+  background-color: var(--foreground);
+  color: var(--text-primary);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   .main {
     padding: 48px 24px;
   }
 
-  .intro {
-    gap: 16px;
-  }
-
   .intro h1 {
     font-size: 32px;
     line-height: 40px;
-    letter-spacing: -1.92px;
+  }
+
+  .features h3 {
+    font-size: 1.5rem;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
   }
 }
 
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
   .page {
     --background: #0a0a0a;
     --foreground: #1a1a1a;
-
     --text-primary: #f0f0f0;
     --text-secondary: #999999;
-
     --button-primary-hover: #7f39fb;
     --button-secondary-hover: #1a1a1a;
     --button-secondary-border: #222222;
   }
+
+  .featureCard {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  }
 }
+
