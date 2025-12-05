@@ -1,15 +1,26 @@
 import { createContext, useState, ReactNode, useContext } from 'react';
 
-type User = {
+export type Meal = {
+  id: string;
+  name: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fats: number;
+};
+
+export type User = {
   age: string;
   weight: string;
   height: string;
   activity: string;
+  meals?: Meal[]; // optional meal list
 };
 
 type UserContextType = {
   user: User;
   setUser: (user: User) => void;
+  addMeal: (meal: Meal) => void; // helper to add meals dynamically
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -19,11 +30,20 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     age: '',
     weight: '',
     height: '',
-    activity: ''
+    activity: '',
+    meals: [],
   });
 
+  // Function to add a new meal
+  const addMeal = (meal: Meal) => {
+    setUser(prev => ({
+      ...prev,
+      meals: [...(prev.meals || []), meal],
+    }));
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, addMeal }}>
       {children}
     </UserContext.Provider>
   );
