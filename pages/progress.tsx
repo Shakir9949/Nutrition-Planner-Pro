@@ -4,8 +4,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/Progress.module.css";
 import { useUser, ProgressEntry } from "../context/UserContext";
-import { Line } from "react-chartjs-2";
-import { Chart } from "chart.js/auto";
+import dynamic from "next/dynamic";
+
+// Only import Line chart on the client to avoid SSR issues
+const Line = dynamic(
+  () => import("react-chartjs-2").then((mod) => mod.Line),
+  { ssr: false }
+);
 
 export default function Progress() {
   const { user, setUser } = useUser();
@@ -36,12 +41,32 @@ export default function Progress() {
   };
 
   const data = {
-    labels: user.progress?.map(p => p.day) || [],
+    labels: user.progress?.map((p) => p.day) || [],
     datasets: [
-      { label: "Calories", data: user.progress?.map(p => p.calories), borderColor: "#7f39fb", backgroundColor: "rgba(127,57,251,0.2)" },
-      { label: "Protein", data: user.progress?.map(p => p.protein), borderColor: "#ff6b6b", backgroundColor: "rgba(255,107,107,0.2)" },
-      { label: "Carbs", data: user.progress?.map(p => p.carbs), borderColor: "#4ecdc4", backgroundColor: "rgba(78,205,196,0.2)" },
-      { label: "Fats", data: user.progress?.map(p => p.fats), borderColor: "#ffe66d", backgroundColor: "rgba(255,230,109,0.2)" },
+      {
+        label: "Calories",
+        data: user.progress?.map((p) => p.calories),
+        borderColor: "#7f39fb",
+        backgroundColor: "rgba(127,57,251,0.2)",
+      },
+      {
+        label: "Protein",
+        data: user.progress?.map((p) => p.protein),
+        borderColor: "#ff6b6b",
+        backgroundColor: "rgba(255,107,107,0.2)",
+      },
+      {
+        label: "Carbs",
+        data: user.progress?.map((p) => p.carbs),
+        borderColor: "#4ecdc4",
+        backgroundColor: "rgba(78,205,196,0.2)",
+      },
+      {
+        label: "Fats",
+        data: user.progress?.map((p) => p.fats),
+        borderColor: "#ffe66d",
+        backgroundColor: "rgba(255,230,109,0.2)",
+      },
     ],
   };
 
@@ -51,18 +76,50 @@ export default function Progress() {
       <main className={styles.main}>
         <h2>Progress Tracker</h2>
         <div className={styles.chartContainer}>
-          {user.progress && user.progress.length > 0 ? <Line data={data} /> : <p>No progress data yet.</p>}
+          {user.progress && user.progress.length > 0 ? (
+            <Line data={data} />
+          ) : (
+            <p>No progress data yet.</p>
+          )}
         </div>
 
         <div className={styles.addProgressForm}>
           <h3>Add Progress Entry</h3>
           <form onSubmit={addProgressEntry} className={styles.form}>
-            <input type="text" placeholder="Day (e.g., 2025-12-10)" value={day} onChange={(e) => setDay(e.target.value)} required />
-            <input type="number" placeholder="Calories" value={calories} onChange={(e) => setCalories(e.target.value)} />
-            <input type="number" placeholder="Protein (g)" value={protein} onChange={(e) => setProtein(e.target.value)} />
-            <input type="number" placeholder="Carbs (g)" value={carbs} onChange={(e) => setCarbs(e.target.value)} />
-            <input type="number" placeholder="Fats (g)" value={fats} onChange={(e) => setFats(e.target.value)} />
-            <button type="submit" className={styles.primaryButton}>Add Entry</button>
+            <input
+              type="text"
+              placeholder="Day (e.g., 2025-12-10)"
+              value={day}
+              onChange={(e) => setDay(e.target.value)}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Calories"
+              value={calories}
+              onChange={(e) => setCalories(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Protein (g)"
+              value={protein}
+              onChange={(e) => setProtein(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Carbs (g)"
+              value={carbs}
+              onChange={(e) => setCarbs(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Fats (g)"
+              value={fats}
+              onChange={(e) => setFats(e.target.value)}
+            />
+            <button type="submit" className={styles.primaryButton}>
+              Add Entry
+            </button>
           </form>
         </div>
       </main>
