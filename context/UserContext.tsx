@@ -12,6 +12,7 @@ export type Meal = {
 export type Recipe = {
   id: string;
   name: string;
+  diet: string;               // <-- added
   ingredients: string[];
   instructions: string;
 };
@@ -38,8 +39,8 @@ type UserContextType = {
   user: User;
   setUser: (user: User) => void;
   addMeal: (meal: Meal) => void;
-  addRecipe: (recipe: Recipe) => void;       // ← added
-  removeRecipe: (id: string) => void;       // ← added
+  addRecipe: (recipe: Recipe) => void;
+  removeRecipe: (id: string) => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -62,7 +63,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
-  // ← new functions
   const addRecipe = (recipe: Recipe) => {
     setUser((prev) => ({
       ...prev,
