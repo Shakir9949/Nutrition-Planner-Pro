@@ -1,3 +1,4 @@
+// components/MealCard.tsx
 import styles from "../styles/MealCard.module.css";
 
 type MealCardProps = {

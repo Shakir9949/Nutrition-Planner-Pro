@@ -13,9 +13,11 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <h1 className={styles.logo}>Nutrition Planner Pro</h1>
       <div className={styles.links}>
-        <Link href="/">Home</Link>
-        <Link href="/profile">Profile</Link>
-        <Link href="/planner">Planner</Link>
+        <Link href="/" className={linkClass('/')}>Home</Link>
+        <Link href="/profile" className={linkClass('/profile')}>Profile</Link>
+        <Link href="/planner" className={linkClass('/planner')}>Planner</Link>
+        <Link href="/recipe" className={linkClass('/recipe')}>Recipes</Link>
+        <Link href="/progress" className={linkClass('/progress')}>Progress</Link>
       </div>
     </nav>
   );

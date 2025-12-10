@@ -1,3 +1,4 @@
+// pages/profile.tsx
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/Profile.module.css";
@@ -71,7 +72,6 @@ export default function Profile() {
             onChange={(e) => setActivity(e.target.value)}
           />
 
-          {/* Buttons container */}
           <div
             style={{
               display: "flex",
