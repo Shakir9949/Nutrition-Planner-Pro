@@ -1,12 +1,12 @@
 // pages/progress.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styles from "../styles/Progress.module.css";
 import { useUser, ProgressEntry } from "../context/UserContext";
 import dynamic from "next/dynamic";
 
-// Only import Line chart on the client to avoid SSR issues
+// Dynamically import Line chart to prevent SSR issues
 const Line = dynamic(
   () => import("react-chartjs-2").then((mod) => mod.Line),
   { ssr: false }
@@ -14,11 +14,20 @@ const Line = dynamic(
 
 export default function Progress() {
   const { user, setUser } = useUser();
-  const [day, setDay] = useState("");
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
+  const [day, setDay] = useState(today);
   const [calories, setCalories] = useState("");
   const [protein, setProtein] = useState("");
   const [carbs, setCarbs] = useState("");
   const [fats, setFats] = useState("");
+
+  // Reset date input to today whenever component mounts
+  useEffect(() => {
+    setDay(today);
+  }, [today]);
 
   const addProgressEntry = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,9 +46,12 @@ export default function Progress() {
       progress: [...(user.progress || []), entry],
     });
 
-    setDay(""); setCalories(""); setProtein(""); setCarbs(""); setFats("");
+    // Reset form inputs but keep date default to today
+    setCalories(""); setProtein(""); setCarbs(""); setFats("");
+    setDay(today);
   };
 
+  // Prepare data for the chart
   const data = {
     labels: user.progress?.map((p) => p.day) || [],
     datasets: [
@@ -75,20 +87,13 @@ export default function Progress() {
       <Navbar />
       <main className={styles.main}>
         <h2>Progress Tracker</h2>
-        <div className={styles.chartContainer}>
-          {user.progress && user.progress.length > 0 ? (
-            <Line data={data} />
-          ) : (
-            <p>No progress data yet.</p>
-          )}
-        </div>
 
         <div className={styles.addProgressForm}>
           <h3>Add Progress Entry</h3>
           <form onSubmit={addProgressEntry} className={styles.form}>
+            <label>Date:</label>
             <input
-              type="text"
-              placeholder="Day (e.g., 2025-12-10)"
+              type="date"
               value={day}
               onChange={(e) => setDay(e.target.value)}
               required
@@ -121,6 +126,14 @@ export default function Progress() {
               Add Entry
             </button>
           </form>
+        </div>
+
+        <div className={styles.chartContainer}>
+          {user.progress && user.progress.length > 0 ? (
+            <Line data={data} />
+          ) : (
+            <p>No progress data yet.</p>
+          )}
         </div>
       </main>
       <Footer />
