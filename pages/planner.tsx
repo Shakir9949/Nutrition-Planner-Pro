@@ -58,35 +58,29 @@ export default function Planner() {
         {/* Display meals */}
         <div className={styles.meals}>
           {user.meals && user.meals.length > 0 ? (
-            user.meals.map((meal) => (
-              <MealCard
-                key={meal.id}
-                id={meal.id}
-                name={meal.name}
-                calories={meal.calories}
-                protein={meal.protein}
-                carbs={meal.carbs}
-                fats={meal.fats}
-              />
-            ))
+            user.meals.map((meal) => <MealCard key={meal.id} meal={meal} />)
           ) : (
             <>
               <MealCard
-                id="1"
-                name="Oatmeal with Fruits"
-                calories={350}
-                protein={12}
-                carbs={50} // placeholder
-                fats={8}   // placeholder
+                meal={{
+                  id: "1",
+                  name: "Oatmeal with Fruits",
+                  calories: 350,
+                  protein: 12,
+                  carbs: 50, // placeholder
+                  fats: 8,   // placeholder
+                }}
               />
 
               <MealCard
-                id="2"
-                name="Grilled Chicken Salad"
-                calories={450}
-                protein={35}
-                carbs={20} // placeholder
-                fats={10}  // placeholder
+                meal={{
+                  id: "2",
+                  name: "Grilled Chicken Salad",
+                  calories: 450,
+                  protein: 35,
+                  carbs: 20, // placeholder
+                  fats: 10,  // placeholder
+                }}
               />
             </>
           )}
