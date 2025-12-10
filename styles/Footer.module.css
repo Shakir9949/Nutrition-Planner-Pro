@@ -1,8 +1,9 @@
 .footer {
   padding: 1rem 0;
   text-align: center;
-  background-color: #0f0f0f; /* foreground dark base */
+  background-color: var(--foreground);
   color: var(--text-secondary);
   border-top: 1px solid #222222;
   font-size: 0.9rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
 }
