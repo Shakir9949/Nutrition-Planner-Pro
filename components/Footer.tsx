@@ -1,8 +1,10 @@
-import '../styles/Footer.module.css';
-import styles from '../styles/Footer.module.css';
+// Components/Footer.tsx
+import styles from "../styles/Footer.module.css";
 
-const Footer = () => {
-  return <footer className={styles.footer}>&copy; 2025 Nutrition Planner Pro</footer>;
-};
-
-export default Footer;
+export default function Footer() {
+  return (
+    <footer className={styles.footer}>
+      <p>© {new Date().getFullYear()} Nutrition Planner Pro</p>
+    </footer>
+  );
+}

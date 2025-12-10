@@ -1,15 +1,18 @@
 .page {
-  background-color: #0a0a0a;
+  background-color: var(--background);
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 .main {
+  width: 100%;
   max-width: 700px;
   margin: 4rem auto;
   padding: 2rem;
-  background-color: #1a1a1a;
+  background-color: var(--foreground);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   color: var(--text-primary);
 }
 
@@ -17,6 +20,7 @@
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: var(--accent);
+  font-weight: 600;
 }
 
 .userInfo {
@@ -31,4 +35,5 @@
 .meals {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
