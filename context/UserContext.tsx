@@ -1,4 +1,3 @@
-// context/UserContext.tsx
 import { createContext, useState, ReactNode, useContext } from "react";
 
 export type Meal = {
@@ -39,6 +38,8 @@ type UserContextType = {
   user: User;
   setUser: (user: User) => void;
   addMeal: (meal: Meal) => void;
+  addRecipe: (recipe: Recipe) => void;       // ← added
+  removeRecipe: (id: string) => void;       // ← added
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -61,8 +62,23 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
+  // ← new functions
+  const addRecipe = (recipe: Recipe) => {
+    setUser((prev) => ({
+      ...prev,
+      recipes: [...(prev.recipes || []), recipe],
+    }));
+  };
+
+  const removeRecipe = (id: string) => {
+    setUser((prev) => ({
+      ...prev,
+      recipes: (prev.recipes || []).filter((r) => r.id !== id),
+    }));
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, addMeal }}>
+    <UserContext.Provider value={{ user, setUser, addMeal, addRecipe, removeRecipe }}>
       {children}
     </UserContext.Provider>
   );
