@@ -67,6 +67,8 @@ export default function Planner() {
                   name: "Oatmeal with Fruits",
                   calories: 350,
                   protein: 12,
+                  carbs: 50,  // placeholder
+                  fats: 8,    // placeholder
                 }}
               />
 
@@ -76,6 +78,8 @@ export default function Planner() {
                   name: "Grilled Chicken Salad",
                   calories: 450,
                   protein: 35,
+                  carbs: 20,  // placeholder
+                  fats: 10,   // placeholder
                 }}
               />
             </>
