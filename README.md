@@ -43,12 +43,12 @@ Calvin	Quality Assurance and Testing (tests code, debugs issues, and ensures fun
 
 ## Timeline and Weekly Milestones
 ### Weekly Goal Tasks:
-#### Week 8: Set up project environment, install dependencies, create base layout, and configure routes in Next.js.
-#### Week 9: Develop user profile form, implement state management (React Context or Redux), and ensure data persistence.
-#### Week 10: Integrate Nutritionix API, fetch and display meal data, and test API functionality. 
-#### Week 11: Implement meal tracking features and create progress visualization using Chart.js or Recharts.
-#### Week 12: Add Spoonacular API for recipe suggestions, refine UI/UX, and enhance responsive design.
-#### Week 13: Conduct final testing, fix bugs, polish design, and deploy the application to Vercel or Netlify.
+Week 8: Set up project environment, install dependencies, create base layout, and configure routes in Next.js.
+Week 9: Develop user profile form, implement state management (React Context or Redux), and ensure data persistence.
+Week 10: Integrate Nutritionix API, fetch and display meal data, and test API functionality. 
+Week 11: Implement meal tracking features and create progress visualization using Chart.js or Recharts.
+Week 12: Add Spoonacular API for recipe suggestions, refine UI/UX, and enhance responsive design.
+Week 13: Conduct final testing, fix bugs, polish design, and deploy the application to Vercel or Netlify.
 
 ## Deliverables
 •	Fully functional web application with all core features implemented.

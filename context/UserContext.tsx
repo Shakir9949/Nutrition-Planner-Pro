@@ -1,3 +1,4 @@
+// context/UserContext.tsx
 import { createContext, useState, ReactNode, useContext } from "react";
 
 export type Meal = {

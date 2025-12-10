@@ -4,36 +4,83 @@ import { useState } from "react";
 import styles from "../styles/Recipe.module.css";
 
 export default function Recipe() {
-  const { user, addRecipe, removeRecipe } = useUser();
-  const [recipeName, setRecipeName] = useState("");
-  const [diet, setDiet] = useState("");
+  const { user, setUser } = useUser();
 
-  const handleAdd = () => {
-    if (!recipeName || !diet) return;
-    const newRecipe: RecipeType = { id: Date.now().toString(), name: recipeName, diet };
-    addRecipe(newRecipe);
-    setRecipeName("");
-    setDiet("");
+  const [name, setName] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+
+  const addRecipe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name) return;
+
+    const newRecipe: RecipeType = {
+      id: Date.now().toString(),
+      name,
+      ingredients: ingredients.split(",").map(i => i.trim()),
+      instructions,
+    };
+
+    setUser({
+      ...user,
+      recipes: [...(user.recipes || []), newRecipe],
+    });
+
+    setName("");
+    setIngredients("");
+    setInstructions("");
+  };
+
+  const removeRecipe = (id: string) => {
+    setUser({
+      ...user,
+      recipes: user.recipes?.filter(r => r.id !== id),
+    });
   };
 
   return (
-    <div className={styles.container}>
-      <h3>Recipe Suggestions</h3>
-      <div className={styles.form}>
-        <input placeholder="Recipe Name" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} />
-        <input placeholder="Diet Type (e.g., Vegan)" value={diet} onChange={(e) => setDiet(e.target.value)} />
-        <button onClick={handleAdd} className={styles.primaryButton}>Add Recipe</button>
+    <div className={styles.page}>
+      <h2>Recipe Manager</h2>
+
+      <div className={styles.addRecipeForm}>
+        <form onSubmit={addRecipe} className={styles.form}>
+          <input
+            type="text"
+            placeholder="Recipe Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Ingredients (comma separated)"
+            value={ingredients}
+            onChange={(e) => setIngredients(e.target.value)}
+          />
+          <textarea
+            placeholder="Instructions"
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
+          />
+          <button type="submit" className={styles.primaryButton}>Add Recipe</button>
+        </form>
       </div>
 
-      <div className={styles.list}>
+      <div className={styles.recipeList}>
         {user.recipes && user.recipes.length > 0 ? (
-          user.recipes.map((r) => (
-            <div key={r.id} className={styles.recipeCard}>
-              <span>{r.name} ({r.diet})</span>
-              <button onClick={() => removeRecipe(r.id)}>Remove</button>
+          user.recipes.map((recipe) => (
+            <div key={recipe.id} className={styles.card}>
+              <h3>{recipe.name}</h3>
+              <p><strong>Ingredients:</strong> {recipe.ingredients.join(", ")}</p>
+              <p><strong>Instructions:</strong> {recipe.instructions}</p>
+              <button className={styles.removeButton} onClick={() => removeRecipe(recipe.id)}>
+                Remove
+              </button>
             </div>
           ))
-        ) : <p>No recipes yet.</p>}
+        ) : (
+          <p>No recipes added yet.</p>
+        )}
       </div>
     </div>
   );
