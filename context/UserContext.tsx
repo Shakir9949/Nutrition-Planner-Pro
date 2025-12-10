@@ -10,12 +10,19 @@ export type Meal = {
   fats: number;
 };
 
+export type Recipe = {
+  id: string;
+  name: string;
+  ingredients: string[];
+  instructions: string;
+};
+
 export type ProgressEntry = {
-  day: string; // ISO date string "YYYY-MM-DD"
-  calories: number;
-  protein: number;
-  carbs: number;
-  fats: number;
+  day: string;
+  calories?: number;
+  protein?: number;
+  carbs?: number;
+  fats?: number;
 };
 
 export type User = {
@@ -23,8 +30,9 @@ export type User = {
   weight: string;
   height: string;
   activity: string;
-  meals?: Meal[]; // optional meal list
-  progress?: ProgressEntry[]; // optional progress list
+  meals?: Meal[];
+  recipes?: Recipe[];
+  progress?: ProgressEntry[];
 };
 
 type UserContextType = {
@@ -42,10 +50,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     height: "",
     activity: "",
     meals: [],
-    progress: [], // initialize progress
+    recipes: [],
+    progress: [],
   });
 
-  // Function to add a new meal
   const addMeal = (meal: Meal) => {
     setUser((prev) => ({
       ...prev,
@@ -60,11 +68,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook to use the UserContext easily
 export const useUser = () => {
   const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
-  }
+  if (!context) throw new Error("useUser must be used within a UserProvider");
   return context;
 };
