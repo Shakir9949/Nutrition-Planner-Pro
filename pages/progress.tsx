@@ -4,8 +4,9 @@ import Footer from "../components/Footer";
 import styles from "../styles/Progress.module.css";
 import { useUser, ProgressEntry } from "../context/UserContext";
 import dynamic from "next/dynamic";
+import ClientOnly from "../components/ClientOnly";
 
-// Dynamically import Line chart to prevent SSR errors on static sites
+// Dynamically import Line chart
 const Line = dynamic(() => import("react-chartjs-2").then((mod) => mod.Line), {
   ssr: false,
 });
@@ -126,11 +127,13 @@ export default function Progress() {
         </div>
 
         <div className={styles.chartContainer}>
-          {user.progress && user.progress.length > 0 ? (
-            <Line data={data} />
-          ) : (
-            <p>No progress data yet.</p>
-          )}
+          <ClientOnly>
+            {user.progress && user.progress.length > 0 ? (
+              <Line data={data} />
+            ) : (
+              <p>No progress data yet.</p>
+            )}
+          </ClientOnly>
         </div>
       </main>
       <Footer />
