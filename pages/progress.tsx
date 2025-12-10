@@ -1,4 +1,3 @@
-// pages/progress.tsx
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -6,16 +5,14 @@ import styles from "../styles/Progress.module.css";
 import { useUser, ProgressEntry } from "../context/UserContext";
 import dynamic from "next/dynamic";
 
-// Dynamically import Line chart to prevent SSR issues
-const Line = dynamic(
-  () => import("react-chartjs-2").then((mod) => mod.Line),
-  { ssr: false }
-);
+// Dynamically import Line chart to prevent SSR errors on static sites
+const Line = dynamic(() => import("react-chartjs-2").then((mod) => mod.Line), {
+  ssr: false,
+});
 
 export default function Progress() {
   const { user, setUser } = useUser();
 
-  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
   const [day, setDay] = useState(today);
@@ -24,7 +21,6 @@ export default function Progress() {
   const [carbs, setCarbs] = useState("");
   const [fats, setFats] = useState("");
 
-  // Reset date input to today whenever component mounts
   useEffect(() => {
     setDay(today);
   }, [today]);
@@ -46,12 +42,13 @@ export default function Progress() {
       progress: [...(user.progress || []), entry],
     });
 
-    // Reset form inputs but keep date default to today
-    setCalories(""); setProtein(""); setCarbs(""); setFats("");
+    setCalories("");
+    setProtein("");
+    setCarbs("");
+    setFats("");
     setDay(today);
   };
 
-  // Prepare data for the chart
   const data = {
     labels: user.progress?.map((p) => p.day) || [],
     datasets: [
